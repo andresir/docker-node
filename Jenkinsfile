@@ -16,10 +16,30 @@ pipeline {
 			steps{
 				script{
 					withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-						sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
+						// sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
+						sh "echo ${dockerhubpwd} | docker login -u registry --password-stdin artifact.bitaloka.id"
 					}
 					sh 'docker push artifact.bitaloka.id/hellonode:latest'
 				}
+			}
+		}
+	}
+	post {
+		always {
+			script {
+				// Logout dari Docker registry
+				sh 'docker logout artifact.bitaloka.id'
+				echo "Docker logout completed."
+			}
+		}
+		success {
+			script {
+				echo "Pipeline berhasil: ${currentBuild.fullDisplayName}"
+			}
+		}
+		failure {
+			script {
+				echo "Pipeline gagal, mohon periksa log untuk lebih detail."
 			}
 		}
 	}
