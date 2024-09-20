@@ -19,6 +19,8 @@ pipeline {
 						// sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
 						sh "echo ${dockerhubpwd} | docker login -u registry --password-stdin artifact.bitaloka.id"
 					}
+					sh 'docker info'
+					sh 'docker images'
 					sh 'docker push artifact.bitaloka.id/hellonode:latest'
 				}
 			}
