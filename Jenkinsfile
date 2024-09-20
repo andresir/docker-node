@@ -4,7 +4,7 @@ pipeline {
 	stages {
 		stage('Build') {
 			steps{
-				sh "docker build -t hellonode:latest ."
+				sh "docker build -t artifact.bitaloka.id/hellonode:latest ."
 			}
 		}
 		stage('Tag docker image') {
