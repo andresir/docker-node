@@ -1,28 +1,24 @@
 pipeline {
 	agent any
 
-	environment {
-		REGISTRY = 'artifact.bitaloka.id'
-	}
-
 	stages {
 		stage('Build') {
 			steps{
-				sh "docker build -t ${env.REGISTRY}/hellonode:latest ."
+				sh "docker build -t artifact.bitaloka.id/hellonode:latest ."
 			}
 		}
 		stage('Tag docker image') {
 			steps {
-				sh "docker tag ${env.REGISTRY}/hellonode:latest ${env.REGISTRY}/hellonode:latest"
+				sh "docker tag artifact.bitaloka.id/hellonode:latest artifact.bitaloka.id/hellonode:latest"
 			}
 		}
 		stage('Push'){
 			steps{
 				script{
 					withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-						sh 'docker login -u registry -p ${dockerhubpwd} ${env.REGISTRY}'
+						sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
 					}
-					sh 'docker push ${env.REGISTRY}/hellonode:latest'
+					sh 'docker push artifact.bitaloka.id/hellonode:latest'
 				}
 			}
 		}
