@@ -9,7 +9,7 @@ pipeline {
 		}
 		stage('Tag docker image') {
 			steps {
-				sh "docker tag artifact.bitaloka.id/hellonode:latest"
+				sh "docker tag artifact.bitaloka.id/hellonode:latest artifact.bitaloka.id/hellonode:latest"
 			}
 		}
 		stage('Push'){
