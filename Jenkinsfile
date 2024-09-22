@@ -7,8 +7,8 @@ pipeline {
 				sh "docker ps -a | grep jenkins"
 				sh "docker exec c04d6a417e81 date"
 				sh """
-						docker exec c04d6a417e81 ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-						docker exec c04d6a417e81 date
+						docker exec -u root c04d6a417e81 ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+						docker exec -u root c04d6a417e81 date
 				"""
 				// Mengupdate tanggal dan waktu di dalam container
 				// sh "docker exec c04d6a417e81 date -s '$(date)'"
