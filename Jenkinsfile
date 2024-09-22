@@ -20,7 +20,7 @@ pipeline {
 				sh "date"
 				sh "pwd"
 				sh "docker ps -a | grep registry"
-				sh "docker exet -it 77c9fd55aa9f sh"
+				sh "docker exec -it 77c9fd55aa9f sh"
 			}
 		}
 		// stage('Build') {
