@@ -14,8 +14,8 @@ pipeline {
 				// // sh "docker exec c04d6a417e81 date -s '$(date)'"
 
 				// Menampilkan tanggal dan waktu setelah diupdate
-				sh "docker exec c04d6a417e81 date"
-				sh "date"
+				// sh "docker exec c04d6a417e81 date"
+				// sh "date"
 
 				sh """
 					docker exec -u root 77c9fd55aa9f ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
