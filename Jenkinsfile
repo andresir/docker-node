@@ -21,6 +21,7 @@ pipeline {
 					docker exec -u root 77c9fd55aa9f ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 					docker exec -u root 77c9fd55aa9f date
 				"""
+				sh "docker exec 77c9fd55aa9f date -s '$(date)'"
 				sh "docker exec 77c9fd55aa9f date"
 			}
 		}
