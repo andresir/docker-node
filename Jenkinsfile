@@ -5,7 +5,8 @@ pipeline {
 		stage('check local time') {
 			steps{
 				sh "docker ps -a | grep jenkins"
-				sh "date"
+				sh "docker exec c04d6a417e81 date"
+				// sh "date"
 			}
 		}
 		// stage('Build') {
