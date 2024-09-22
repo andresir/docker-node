@@ -2,22 +2,22 @@ pipeline {
 	agent any
 
 	stages {
-		// stage('set local time') {
-		// 	steps{
-		// 		sh "docker ps -a | grep jenkins"
-		// 		sh "docker exec c04d6a417e81 date"
-		// 		sh """
-		// 			docker exec -u root c04d6a417e81 ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-		// 			docker exec -u root c04d6a417e81 date
-		// 		"""
-		// 		// Mengupdate tanggal dan waktu di dalam container
-		// 		// sh "docker exec c04d6a417e81 date -s '$(date)'"
+		stage('set local time') {
+			steps{
+				// sh "docker ps -a | grep jenkins"
+				// sh "docker exec c04d6a417e81 date"
+				// sh """
+				// 	docker exec -u root c04d6a417e81 ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
+				// 	docker exec -u root c04d6a417e81 date
+				// """
+				// // Mengupdate tanggal dan waktu di dalam container
+				// // sh "docker exec c04d6a417e81 date -s '$(date)'"
 
-		// 		// Menampilkan tanggal dan waktu setelah diupdate
-		// 		sh "docker exec c04d6a417e81 date"
-		// 		// sh "date"
-		// 	}
-		// }
+				// Menampilkan tanggal dan waktu setelah diupdate
+				sh "docker exec c04d6a417e81 date"
+				sh "date"
+			}
+		}
 		stage('Build') {
 			steps{
 				sh "docker build -t artifact.bitaloka.id/hellonode:latest ."
