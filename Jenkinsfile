@@ -20,6 +20,9 @@ pipeline {
 				sh "date"
 				sh "pwd"
 				sh "docker ps -a | grep registry"
+				withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+					sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
+				}
 				sh "docker exec -it 77c9fd55aa9f sh"
 			}
 		}
