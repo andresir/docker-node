@@ -18,6 +18,7 @@ pipeline {
 				sh "date"
 
 				sh "docker ps -a | grep registry"
+				sh "docker exec 77c9fd55aa9f date"
 			}
 		}
 		// stage('Build') {
