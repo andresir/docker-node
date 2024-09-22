@@ -37,6 +37,7 @@ pipeline {
 					}
 					// sh "cat ~/.docker/config.json"
 					// sh "docker info"
+					sh "curl -i https://artifact.bitaloka.id/v2/users/login/"
 					sh "docker exec c04d6a417e81 date"
 					sh "docker push artifact.bitaloka.id/hellonode:latest"
 				}
