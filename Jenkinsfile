@@ -46,5 +46,5 @@ pipeline {
 	// 			echo "Pipeline gagal, mohon periksa log untuk lebih detail."
 	// 		}
 	// 	}
-	// }
+	}
 }
