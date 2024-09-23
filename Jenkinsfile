@@ -12,8 +12,8 @@ pipeline {
 				script{
 					sh "docker tag dev-rtsm.ottopay.id/hellonode:latest dev-rtsm.ottopay.id/hellonode:latest"
 					withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-						sh "docker login -u registry -p ${dockerhubpwd} dev-rtsm.ottopay.id"
-						// sh "echo ${dockerhubpwd} | docker login -u registry --password-stdin dev-rtsm.ottopay.id"
+						// sh "docker login -u registry -p ${dockerhubpwd} dev-rtsm.ottopay.id"
+						sh "echo '123456' | docker login -u admin --password-stdin dev-rtsm.ottopay.id"
 					}
 					// sh "cat ~/.docker/config.json"
 					// sh "docker info"
