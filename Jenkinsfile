@@ -17,7 +17,8 @@ pipeline {
 					}
 					// sh "cat ~/.docker/config.json"
 					// sh "docker info"
-					sh "docker rmi c05f0103edee"
+					sh "docker rmi artifact.bitaloka.id/hellonode:latest"
+					sh "docker rmi hellonode:latest"
 					sh "docker push dev-rtsm.ottopay.id/hellonode:latest"
 				}
 			}
