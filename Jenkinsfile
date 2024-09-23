@@ -2,72 +2,44 @@ pipeline {
 	agent any
 
 	stages {
-		stage('set local time') {
+		stage('Build') {
 			steps{
-				// // sh "docker ps -a | grep jenkins"
-				// // sh "docker exec c04d6a417e81 date"
-				// sh """
-				// 	docker exec -u root c04d6a417e81 ln -sf /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
-				// 	docker exec -u root c04d6a417e81 date
-				// """
-				// // Mengupdate tanggal dan waktu di dalam container
-				// // sh "docker exec c04d6a417e81 date -s '$(date)'"
-
-				// // Menampilkan tanggal dan waktu setelah diupdate
-				// sh "docker exec c04d6a417e81 date"
-
-				sh "exit"
-				sh "date"
-				sh "pwd"
-				sh "docker ps -a | grep registry"
-				withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-					sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
-				}
-				sh "docker exec -it 77c9fd55aa9f sh"
+				sh "docker build -t dev-rtsm.ottopay.id/hellonode:latest ."
 			}
 		}
-		// stage('Build') {
-		// 	steps{
-		// 		sh "docker build -t artifact.bitaloka.id/hellonode:latest ."
-		// 	}
-		// }
-		// stage('Tag docker image') {
-		// 	steps {
-		// 		sh "docker tag artifact.bitaloka.id/hellonode:latest artifact.bitaloka.id/hellonode:latest"
-		// 	}
-		// }
-		// stage('Push'){
-		// 	steps{
-		// 		script{
-		// 			withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-		// 				// sh 'docker login -u registry -p ${dockerhubpwd} artifact.bitaloka.id'
-		// 				sh "echo ${dockerhubpwd} | docker login -u registry --password-stdin artifact.bitaloka.id"
-		// 			}
-		// 			// sh "cat ~/.docker/config.json"
-		// 			// sh "docker info"
-		// 			sh "docker exec c04d6a417e81 date"
-		// 			sh "docker push artifact.bitaloka.id/hellonode:latest"
-		// 		}
-		// 	}
-		// }
+		stage('Push'){
+			steps{
+				script{
+					sh "docker tag dev-rtsm.ottopay.id/hellonode:latest dev-rtsm.ottopay.id/hellonode:latest"
+					withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
+						sh "docker login -u registry -p ${dockerhubpwd} dev-rtsm.ottopay.id"
+						// sh "echo ${dockerhubpwd} | docker login -u registry --password-stdin dev-rtsm.ottopay.id"
+					}
+					// sh "cat ~/.docker/config.json"
+					// sh "docker info"
+					sh "docker rmi c05f0103edee"
+					sh "docker push dev-rtsm.ottopay.id/hellonode:latest"
+				}
+			}
+		}
 	}
-	// post {
-	// 	always {
-	// 		script {
-	// 			// Logout dari Docker registry
-	// 			sh "docker logout artifact.bitaloka.id"
-	// 			echo "Docker logout completed."
-	// 		}
-	// 	}
-	// 	success {
-	// 		script {
-	// 			echo "Pipeline berhasil: ${currentBuild.fullDisplayName}"
-	// 		}
-	// 	}
-	// 	failure {
-	// 		script {
-	// 			echo "Pipeline gagal, mohon periksa log untuk lebih detail."
-	// 		}
-	// 	}
-	// }
+	post {
+		always {
+			script {
+				// Logout dari Docker registry
+				sh "docker logout dev-rtsm.ottopay.id"
+				echo "Docker logout completed."
+			}
+		}
+		success {
+			script {
+				echo "Pipeline berhasil: ${currentBuild.fullDisplayName}"
+			}
+		}
+		failure {
+			script {
+				echo "Pipeline gagal, mohon periksa log untuk lebih detail."
+			}
+		}
+	}
 }
